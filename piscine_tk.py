@@ -13,13 +13,27 @@ def ajoutNageur(liste:list):
     b = e_nage_quelle.get()
     c = e_longueur.get()
     liste.append((a,b,c))
+    e_nage_qui.delete(0, 'end')
+    e_nage_quelle.delete(0, 'end')
+    e_longueur.delete(0, 'end')
+
+
+def rechercheNageur(liste:list):
+    """Liste toutes les performances d'un nageur en particulier"""
+    nom = e_cherche_nageurs.get()
+    print("Prénom du nageur: ", nom)
+    for elt in liste:
+        if elt[0]==nom:
+         print(f"nage {elt[1]}, longueur {elt[2]}")
+
 
 def listeNageurs(liste:list):
     """Liste toutes les performances de tous les nageurs"""
     txt = ''
     for elt in liste:
-        txt += str(elt[0]) + ", a nagé en : "+ str(elt[1]) + ". Pendants : " + str(elt[2]) + " longueur(s)."
+        txt += str(elt[0]) + ", a nagé en : "+ str(elt[1]) + ". Pendants : " + str(elt[2]) + " longueur(s)." + '\n'
     l_liste_resultat.config(text = txt)
+  
 
 fenetre = Tk()
 fenetre.title('Gestion Piscine')
@@ -50,6 +64,8 @@ e_longueur.grid(column=1,row=2)
 #Ajout
 b_ajout = ttk.Button(mainframe, text="Ajout", command = lambda: ajoutNageur(listeNageur))
 b_ajout.grid(column=1,row=3)
+text_valide = ttk.Label(mainframe, text="")
+text_valide.grid(column=2,row=3)
 
 #Liste Nageur
 b_liste = ttk.Button(mainframe, text="Liste nageurs", command = lambda: listeNageurs(listeNageur))
@@ -72,7 +88,9 @@ b_cherche_nageurs = ttk.Button(mainframe, text="rechercher", command = lambda: a
 b_cherche_nageurs.grid(column=2,row=5)
 
 #Resultats
-l_liste_resultat = ttk.Label(mainframe, text='Resultats')
-l_liste_resultat.grid(column=0,row=7)
+l_frame_resultats = Frame(fenetre, background="white", bd=2, bg="white", relief=SUNKEN, width= 100)
+l_frame_resultats.grid(column=0,row=7,columnspan=3)
+l_liste_resultat = ttk.Label(l_frame_resultats, text='Resultats')
+l_liste_resultat.grid(column=0,row=0)
 
 fenetre.mainloop()
